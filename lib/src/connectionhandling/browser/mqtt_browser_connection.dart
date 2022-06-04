@@ -122,7 +122,7 @@ class MqttBrowserConnection extends MqttConnectionBase {
     client?.sendTypedData(bData);
   }
 
-  void _disconnect() {
+  void disconnectInternal() {
     if (client != null) {
       client.close();
       client = null;
@@ -132,7 +132,7 @@ class MqttBrowserConnection extends MqttConnectionBase {
   /// OnDone listener callback
   @override
   void onDone() {
-    _disconnect();
+    disconnectInternal();
     if (onDisconnected != null) {
       MqttLogger.log(
           'MqttBrowserConnection::_onDone - calling disconnected callback');

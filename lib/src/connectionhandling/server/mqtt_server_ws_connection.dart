@@ -117,7 +117,7 @@ class MqttServerWsConnection extends MqttServerConnection {
   @override
   void disconnect({bool auto = false}) {
     if (auto) {
-      _disconnect();
+      disconnectInternal();
     } else {
       onDone();
     }
@@ -126,7 +126,7 @@ class MqttServerWsConnection extends MqttServerConnection {
   /// OnDone listener callback
   @override
   void onDone() {
-    _disconnect();
+    disconnectInternal();
     if (onDisconnected != null) {
       MqttLogger.log(
           'MqttWsConnection::_onDone - calling disconnected callback');
@@ -134,7 +134,7 @@ class MqttServerWsConnection extends MqttServerConnection {
     }
   }
 
-  void _disconnect() {
+  void disconnectInternal() {
     if (client != null) {
       client.close();
       client = null;

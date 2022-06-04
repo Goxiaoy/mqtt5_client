@@ -54,7 +54,7 @@ class MqttConnectionBase {
   /// OnError listener callback
   @protected
   void onError(dynamic error) {
-    _disconnect();
+    disconnectInternal();
     if (onDisconnected != null) {
       MqttLogger.log(
           'MqttConnectionBase::_onError - calling disconnected callback');
@@ -65,7 +65,7 @@ class MqttConnectionBase {
   /// OnDone listener callback
   @protected
   void onDone() {
-    _disconnect();
+    disconnectInternal();
     if (onDisconnected != null) {
       MqttLogger.log(
           'MqttConnectionBase::_onDone - calling disconnected callback');
@@ -73,7 +73,7 @@ class MqttConnectionBase {
     }
   }
 
-  void _disconnect() {
+  void disconnectInternal() {
     if (client != null) {
       client.destroy();
       client = null;
@@ -84,7 +84,7 @@ class MqttConnectionBase {
   @protected
   void disconnect({bool auto = false}) {
     if (auto) {
-      _disconnect();
+      disconnectInternal();
     } else {
       onDone();
     }

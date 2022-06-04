@@ -152,7 +152,7 @@ class MqttBrowserWsConnection extends MqttBrowserConnection {
   /// OnError listener callback
   @override
   void onError(dynamic error) {
-    _disconnect();
+    disconnectInternal();
     if (onDisconnected != null) {
       MqttLogger.log(
           'MqttConnectionBase::_onError - calling disconnected callback');
@@ -163,7 +163,7 @@ class MqttBrowserWsConnection extends MqttBrowserConnection {
   /// OnDone listener callback
   @override
   void onDone() {
-    _disconnect();
+    disconnectInternal();
     if (onDisconnected != null) {
       MqttLogger.log(
           'MqttConnectionBase::_onDone - calling disconnected callback');
@@ -172,7 +172,7 @@ class MqttBrowserWsConnection extends MqttBrowserConnection {
   }
 
   @override
-  void _disconnect() {
+  void disconnectInternal() {
     if (client != null) {
       client.close();
       client = null;
